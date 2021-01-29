@@ -1,73 +1,33 @@
-const canvas = document.querySelector('canvas');
-const gl = canvas.getContext('webgl');
+var scene, camera, renderer, mesh;
 
-if(!gl){
-    throw new Error('WebGl not supported');
+function init(){
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(90, 1280/720, 0.1, 1000);
+
+    mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1,1,1),
+        new THREE.MeshBasicMaterial({color: 0xff9999, wireframe: true})
+    );
+
+    scene.add(mesh);
+
+    camera.position.set(0,0,-5);
+    camera.lookAt(new THREE.Vector3(0,0,0));
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(1280, 720);
+    document.body.appendChild(renderer.domElement);
+
+    animate();
 }
 
-const vertexData = [
-    0, 1, 0, //v1.position
-    1, -1, 0, //v2.position
-    -1, -1, 0, //v3.position
-];
-const colorData = [
-    1, 0, 0, //v1.color
-    0, 1, 0, //v2.color
-    0, 0, 1, //v3.color
-];
+function animate(){
+    requestAnimationFrame(animate);
 
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexData), gl.STATIC_DRAW);
+    mesh.rotation.x += 0.01;
+    mesh.rotation.y += 0.02;
 
-const colorBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW);
-
-const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-gl.shaderSource(vertexShader, `
-precision mediump float;
-
-attribute vec3 position;
-attribute vec3 color;
-varying vec3 vColor;
-
-void main() {
-    vColor = color;
-    gl_Position = vec4(position, 1);
+    renderer.render(scene, camera);
 }
-`);
 
-gl.compileShader(vertexShader);
-
-const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-gl.shaderSource(fragmentShader, `
-precision mediump float;
-
-varying vec3 vColor;
-
-void main() {
-    gl_FragColor = vec4(vColor, 1);
-}
-`);
-gl.compileShader(fragmentShader); 
-console.log(gl.getShaderInfoLog(fragmentShader));
-
-const program = gl.createProgram();
-gl.attachShader(program, vertexShader);
-gl.attachShader(program, fragmentShader);
-
-gl.linkProgram(program);
-
-const positionLocation = gl.getAttribLocation(program, `position`);
-gl.enableVertexAttribArray(positionLocation);
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
-
-const colorLocation = gl.getAttribLocation(program, `color`);
-gl.enableVertexAttribArray(colorLocation);
-gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-gl.vertexAttribPointer(colorLocation, 3, gl.FLOAT, false, 0, 0);
-
-gl.useProgram(program);
-gl.drawArrays(gl.TRIANGLES, 0, 3);
+window.onload = init;
