@@ -52,15 +52,15 @@ function animate(){
     if(keyboard[37]){ //flecha izq
         camera.position.x += player.speed;
     }
-    if(keyboard[38]){ //flecha arr
-        camera.position.y += player.speed;
-    }
-    if(keyboard[39]){ //flecha aba
+    //if(keyboard[38]){ //flecha arr
+    //    camera.position.y += player.speed;
+    //}
+    if(keyboard[39]){ //flecha der
         camera.position.x -= player.speed;        
     }
-    if(keyboard[40]){ //flecha der
-        camera.position.y -= player.speed;
-    }
+    //if(keyboard[40]){ //flecha aba
+    //    camera.position.y -= player.speed;
+    //}
 
     renderer.render(scene, camera);
 }
