@@ -1,32 +1,28 @@
 
 var scene, camera, renderer;
 var meshBall, meshCourt, meshNet, meshTube, meshTube1;
-
 var raquet;
-
-var ballTexture, ballBumpMap, ballColorMap;
-
 var keyboard = {};
 var player = {height:1.8, speed:0.2};
 
 function init(){
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(02211155);
     camera = new THREE.PerspectiveCamera(90, 1280/720, 0.1, 1000);    
 
+    //Background (Se cambiara)
     let urls = [
         'NiagaraFalls/posx.jpg','NiagaraFalls/negx.jpg',
         'NiagaraFalls/posy.jpg','NiagaraFalls/negy.jpg',
         'NiagaraFalls/posz.jpg','NiagaraFalls/negz.jpg',
     ];
-
     let skyLoader = new THREE.CubeTextureLoader();
     scene.background = skyLoader.load(urls);
-    //Texturas
+
+    //Variable para poder cargar texturas
     const loadManager = new THREE.LoadingManager();
     const loader = new THREE.TextureLoader(loadManager);
 
-    //Cancha, bola y red
+    //Bola
     meshBall = new THREE.Mesh(
         new THREE.SphereGeometry(0.325, 20, 16),
         new THREE.MeshPhongMaterial(
@@ -40,7 +36,8 @@ function init(){
     meshBall.receiveShadow = true;
     meshBall.castShadow = true;
     scene.add(meshBall);
-
+    
+    //Cancha
     meshCourt = new THREE.Mesh(
         new THREE.PlaneGeometry(17,30.78,10,10),
         new THREE.MeshPhongMaterial({
@@ -53,6 +50,7 @@ function init(){
     meshCourt.castShadow = true;
     scene.add(meshCourt);
 
+    //Red parte de arriba        
     meshNet = new THREE.Mesh(
         new THREE.PlaneGeometry(10.38,0.16,10,10),
         new THREE.MeshPhongMaterial({
@@ -66,6 +64,7 @@ function init(){
     meshNet.castShadow = true;
     scene.add(meshNet);
 
+    //Tubo izquierdo red
     meshTube = new THREE.Mesh(
         new THREE.CylinderGeometry( 0.05, 0.05, 1.37, 32 ),
         new THREE.MeshPhongMaterial({
@@ -78,6 +77,7 @@ function init(){
     meshTube.castShadow = true;
     scene.add( meshTube );
 
+    //Tubo derecho red
     meshTube1 = new THREE.Mesh(
         new THREE.CylinderGeometry( 0.05, 0.05, 1.37, 32 ),
         new THREE.MeshPhongMaterial({
@@ -90,6 +90,7 @@ function init(){
     meshTube1.castShadow = true;
     scene.add( meshTube1 );
 
+    //Hilos de la redd
     geometry = new THREE.CylinderGeometry( 0.01, 0.01, 1.2, 32 );
     material = new THREE.MeshBasicMaterial( {color: 0x000000} );
     var thread1 = new THREE.Mesh( geometry, material );
@@ -383,6 +384,7 @@ function init(){
 function animate(){
     requestAnimationFrame(animate);    
 
+    //Rotacion constante de la bola
     meshBall.rotation.x += 0.01;
     meshBall.rotation.y += 0.02;
 
