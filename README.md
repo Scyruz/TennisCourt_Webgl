@@ -9,4 +9,5 @@ Se representará la luz del sol junto con las sombras que se reflejan en la canc
 y serán creadas por 3 objetos principales:
 pelotas, raqueta y red.
 
-WISH ME LUCK! :)
+IMPORTANTE: Para correr en servidor web es necesario correr el comando "http-server" para saber el puerto del servidor local.
+
