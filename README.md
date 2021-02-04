@@ -9,5 +9,10 @@ Se representará la luz del sol junto con las sombras que se reflejan en la canc
 y serán creadas por 3 objetos principales:
 pelotas, raqueta y red.
 
-IMPORTANTE: Para correr en servidor web es necesario correr el comando "http-server" para saber el puerto del servidor local.
+IMPORTANTE: Para correr en servidor web es necesario correr npm start y la escena estará en localhost:8000
+
+Profe, mi internet está completamente lento y por esa razón no pude subir el original, mi mejor
+solución fue grabarlo con mi celular y utilizar mis datos para subirlo, mil disculpas :/ 
+VIDEO: https://drive.google.com/file/d/1nP-Z2vt4byqgVKeP7ciyZJQuPCXnHpuT/view?usp=sharing
+
 
